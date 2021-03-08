@@ -21,13 +21,8 @@ app.get("/", (request, response) => {
   response.sendFile(__dirname + "/views/index.html");
 });
 
-// var corsOptionsDelegate = function (req, callback) {
-//   callback(null, {origin: false}) // callback expects two parameters: error and options
-// }
-
 app.get("/wake",async (req, res) => {
   let msg = await harvester()
-  console.log(msg)
   res.json({status: "done!", msg: msg})
 })
 

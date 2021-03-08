@@ -26,6 +26,10 @@ app.get("/wake",async (req, res) => {
   res.json({status: "done!", msg: msg})
 })
 
+app.get('/embed', (req, res) => {
+  res.sendFile(__dirname + '/views/embed.html');
+})
+
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });

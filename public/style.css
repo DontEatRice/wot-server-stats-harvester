@@ -46,7 +46,16 @@ ul li {
 }
 
 ul li a:hover {
-  color:blue;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+ul li a:visited {
+  color: rgb(0, 132, 255);
+}
+
+ul li a {
+  color: rgb(0, 132, 255);
 }
 
 @media (max-width: 500px) {

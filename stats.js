@@ -13,5 +13,6 @@ module.exports = {
     EU: mongoose.model('EU', statsSchema), 
     RU: mongoose.model('RU', statsSchema), 
     NA: mongoose.model('NA', statsSchema),
-    ASIA: mongoose.model('ASIA', statsSchema)
+    ASIA: mongoose.model('ASIA', statsSchema),
+    DAY: mongoose.model('DAY', statsSchema)
 }

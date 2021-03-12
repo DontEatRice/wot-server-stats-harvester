@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const harvester = require('./harvester');
-const fetch = require('node-fetch')
+const daily = require('./dailyStats');
 const cors = require('cors')
 
 dotenv.config()
@@ -28,6 +28,11 @@ app.get("/wake",async (req, res) => {
 
 app.get('/embed', (req, res) => {
   res.sendFile(__dirname + '/views/embed.html');
+})
+
+app.get('/daily', async (req, res) => {
+  const DS = await daily();
+  res.json({meta: DS});
 })
 
 const listener = app.listen(process.env.PORT || 3000, () => {

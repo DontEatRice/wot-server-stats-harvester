@@ -1,4 +1,3 @@
-// const dotenv = require("dotenv");
 const Stats = require("./stats");
 
 const servers = [
@@ -58,35 +57,6 @@ const dayAvg = async () => {
         return{ status: 'error', msg: e };
     }
     return dataset;
-    // const findStats = Stats.EU.find({date: {$gt: yester.toISOString(), $lt: today.toISOString()}}).select("servers date");
-    // 
 }
 
-
-
-// class Day {
-//     constructor(date) {
-//         this.sum = 0; 
-//         this.day = date.getDate();
-//         this.fullDate = date;
-//         this.counter = 0;
-//     }
-
-//     addStats(servers) {
-//         this.counter++;
-//         for(const server in servers) {
-//             this.sum += server.players
-//         }
-//     }
-
-//     generateData() {
-//         if (this.sum === 0 || this.counter === 0) {
-//             console.error('Invalid data');
-//             return -1;
-//         } 
-//         let avg = Math.round(this.sum / this.counter);
-        
-//     }
-
-// }
 module.exports = dayAvg;

@@ -31,8 +31,8 @@ app.get('/embed', (req, res) => {
 })
 
 app.get('/daily', async (req, res) => {
-  const DS = await daily();
-  res.json({meta: DS});
+  const pushed = await daily();
+  res.json({meta: pushed});
 })
 
 const listener = app.listen(process.env.PORT || 3000, () => {

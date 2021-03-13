@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const harvester = require('./harvester');
 const daily = require('./dailyStats');
+const delUseless = require('./delete');
 const cors = require('cors')
 
 dotenv.config()
@@ -33,6 +34,11 @@ app.get('/embed', (req, res) => {
 app.get('/daily', async (req, res) => {
   const pushed = await daily();
   res.json({meta: pushed});
+})
+
+app.get('/delete', async (req, res) => {
+  const deleted = await delUseless();
+  res.json({meta: deleted});
 })
 
 const listener = app.listen(process.env.PORT || 3000, () => {

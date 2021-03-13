@@ -7,17 +7,7 @@ const servers = [
     { schema: Stats.ASIA, name: "asia" }
   ];
 
-const valid = (data, expectedDate) => { // expected value = today
-    for (const stats of data) {
-        if (expectedDate.getUTCDate() !== stats.date.getUTCDate()) {
-            console.error('Invalid date fetched');
-            return false;
-        }
-    }
-    return true;
-} 
-
-const getAvg = data => {
+const getAvg = (data) => {
     let sum = 0;
     for (const stats of data) {
         for (const server of stats.servers) {
@@ -35,17 +25,12 @@ const dayAvg = async () => {
     let dataset = [];
     for(const server of servers) {
         try {
-            const data = await server.schema.find({date: {$gt: yester.toISOString(), $lt: today.toISOString()}}).select("servers date").exec();
-            if (valid(data, today)) {
-                dataset.push({ name: server.name, players: getAvg(data) });
-            }
-            else
-                return {status: 'error', msg: 'Invalid date, expcted: ' + today.getUTCDate()};
+            const data = await server.schema.find({date: {$gt: yester.toISOString(), $lt: today.toISOString()}}).exec();
+            dataset.push({ name: server.name, players: getAvg(data)});
         } catch (e) {
-            return{ status: 'error', msg: e };
+            return{ status: 'error', msg: 'finding error' };
         }
     }
-    console.log(today);
     const toPush = new Stats.DAY({servers: dataset, date: today});
     const errs = toPush.validateSync();
     if (errs)

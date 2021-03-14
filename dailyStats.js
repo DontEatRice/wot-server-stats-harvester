@@ -7,10 +7,10 @@ const servers = [
     { schema: Stats.ASIA, name: "asia" }
   ];
 
-const findDay = async () => {
-    const find = await servers[0].schema.find().sort({date: -1}).limit(1);
+const findDay = async (schema, days) => {
+    const find = await schema.find().sort({date: -1}).limit(1);
     let date = find[0].date;
-    return date.setDate(date.getDate()-1);   
+    return date.setDate(date.getDate()-days);   
 }
 
 const getAvg = (data) => {
@@ -24,7 +24,7 @@ const getAvg = (data) => {
 } 
 
 const dayAvg = async () => {
-    const day = await findDay();
+    const day = await findDay(servers[0].schema, 1);
     const start = new Date(day)
     start.setHours(1, 0, 0, 0);
     const stop = new Date(start);
@@ -51,4 +51,4 @@ const dayAvg = async () => {
     return dataset;
 }
 
-module.exports = dayAvg;
+module.exports = {avg: dayAvg,findDay: findDay};

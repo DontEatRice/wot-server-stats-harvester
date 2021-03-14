@@ -1,4 +1,5 @@
 const Stats = require("./stats");
+const findDay = require('./dailyStats').findDay;
 
 const servers = [
     { schema: Stats.EU, name: "eu" },
@@ -21,8 +22,10 @@ const remover = async (data, schema) => {
 }
 
 const deleteMoreThan24hOld = async () => {
-    let date = new Date();
-    date.setHours(date.getHours()-25);
+    const day = await findDay(servers[0].schema, 2);
+    let date = new Date(day);
+    date.setHours(1, 1, 0, 0);
+    date.setHours(date.getHours()+23);
     let toReturn = [];
     for (const server of servers) {
         const data = await server.schema.find({date: {$lt: date.toISOString()}}).exec();

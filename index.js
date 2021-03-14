@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const harvester = require('./harvester');
-const daily = require('./dailyStats');
+const daily = require('./dailyStats').avg;
 const delUseless = require('./delete');
 const cors = require('cors')
 

@@ -31,7 +31,7 @@ const dayAvg = async () => {
             return{ status: 'error', msg: 'finding error' };
         }
     }
-    const toPush = new Stats.DAY({servers: dataset, date: today});
+    const toPush = new Stats.DAY({servers: dataset, date: yester});
     const errs = toPush.validateSync();
     if (errs)
         console.log(errs);

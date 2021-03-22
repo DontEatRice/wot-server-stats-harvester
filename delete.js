@@ -22,7 +22,7 @@ const remover = async (data, schema) => {
 }
 
 const deleteMoreThan24hOld = async () => {
-    const day = await findDay(servers[0].schema, 2);
+    const day = await findDay(servers[0].schema, 3);
     let date = new Date(day);
     date.setHours(1, 1, 0, 0);
     date.setHours(date.getHours()+23);

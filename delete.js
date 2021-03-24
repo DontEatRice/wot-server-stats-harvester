@@ -8,33 +8,21 @@ const servers = [
     { schema: Stats.ASIA, name: "asia" }
   ];
 
-const remover = async (data, schema) => {
-    let deleted = [];
-    for (const stats of data) {
-        try {
-            const toDel = await schema.findByIdAndDelete(stats.id).exec();
-            deleted.push(toDel._id);
-        } catch (e) {
-            return 'e' + e;
-        }
-    }
-    return deleted;
-}
-
-const deleteMoreThan24hOld = async () => {
+const deleteMoreThan48hOld = async () => {
     const day = await findDay(servers[0].schema, 3);
     let date = new Date(day);
     date.setHours(1, 1, 0, 0);
     date.setHours(date.getHours()+23);
     let toReturn = [];
     for (const server of servers) {
-        const data = await server.schema.find({date: {$lt: date.toISOString()}}).exec();
-        const removed = await remover(data, server.schema);
-        if (removed[0] === 'e')
-            return {msg: 'error', body: removed}
-        toReturn = toReturn.concat(removed);
+        try {
+          const rem = await server.schema.deleteMany({date: {$lt: date.toISOString()}});
+          toReturn.push(rem.deletedCount)
+        } catch (e) {
+          return e;
+        }
     }
     return toReturn;
 }
 
-module.exports = deleteMoreThan24hOld;
+module.exports = deleteMoreThan48hOld;

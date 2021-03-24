@@ -14,10 +14,8 @@ const hourlyHarvest = async () => {
     let returns = []
     for(const server of servers) {
         const apiLink = `https://api.worldoftanks.${server.name}/wgn/servers/info/?application_id=${process.env.APP_ID}`;
-        const data = await fetch(apiLink)
-        if (!data.ok) {
-          returns.push(data.status)
-        } else {
+        try {
+          const data = await fetch(apiLink)
           const load = await data.json()
           const stats = load.data.wot
           let arr = [];
@@ -33,7 +31,9 @@ const hourlyHarvest = async () => {
           } catch(e) {
               returns.push(e)
           }
-        }
+        } catch (e) {
+          return e;
+        }        
     }
     return returns
 };

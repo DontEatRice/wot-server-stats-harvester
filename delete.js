@@ -19,7 +19,7 @@ const deleteMoreThan48hOld = async () => {
           const rem = await server.schema.deleteMany({date: {$lt: date.toISOString()}});
           toReturn.push(rem.deletedCount)
         } catch (e) {
-          return e;
+          throw e
         }
     }
     return toReturn;

@@ -29,10 +29,10 @@ const hourlyHarvest = async () => {
               const back = await dataToPush.save()
               returns.push(back)
           } catch(e) {
-              returns.push(e)
+              throw e
           }
         } catch (e) {
-          return e;
+          throw e;
         }        
     }
     return returns

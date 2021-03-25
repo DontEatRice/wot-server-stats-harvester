@@ -35,7 +35,7 @@ const dayAvg = async () => {
             const data = await server.schema.find({date: {$gte: start.toISOString(), $lt: stop.toISOString()}}).exec();
             dataset.push({ name: server.name, players: getAvg(data)});
         } catch (e) {
-            return{ status: 'error', msg: 'finding error' };
+            throw e
         }
     }
     const toPush = new Stats.DAY({servers: dataset, date: start});
@@ -46,7 +46,7 @@ const dayAvg = async () => {
         const push = await toPush.save();
         console.log(push);
     } catch (e) {
-        return{ status: 'error', msg: e };
+        throw e
     }
     return dataset;
 }

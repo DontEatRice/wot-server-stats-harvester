@@ -22,9 +22,18 @@ app.get("/", (request, response) => {
   response.sendFile(__dirname + "/views/index.html");
 });
 
+const handleError = (res, e) => {
+  res.status(500)
+  res.json({msg: e})
+}
+
 app.get("/wake",async (req, res) => {
-  let msg = await harvester()
-  res.json({status: "done!", msg: msg})
+  try {
+    let msg = await harvester()
+    res.json({status: "done!", msg: msg})
+  } catch (e) {
+    handleError(res, e)
+  }
 })
 
 app.get('/embed', (req, res) => {
@@ -32,13 +41,21 @@ app.get('/embed', (req, res) => {
 })
 
 app.get('/daily', async (req, res) => {
-  const pushed = await daily();
-  res.json({meta: pushed});
+  try {
+    const pushed = await daily();
+    res.json({meta: pushed});
+  } catch (e) {
+    handleError(res, e);
+  }
 })
 
 app.get('/delete', async (req, res) => {
-  const deleted = await delUseless();
-  res.json({meta: deleted});
+  try {
+    const deleted = await delUseless();
+    res.json({meta: deleted});
+  } catch (e) {
+    handleError(res, e)
+  }
 })
 
 const listener = app.listen(process.env.PORT || 3000, () => {
